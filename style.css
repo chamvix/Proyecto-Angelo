@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  font-family: 'Fredoka One', cursive;
+  background: linear-gradient(#a0e7e5, #fcd5ce);
+  overflow-x: hidden;
+}
+
+header {
+  background-color: #ffb703;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  font-size: 2.5em;
+}
+
+.character {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.character img {
+  width: 200px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.speech {
+  text-align: center;
+  font-size: 1.8em;
+  background: #fff3c2;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 20px 40px;
+  display: inline-block;
+}
+
+.levels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  text-align: center;
+}
+
+.level {
+  background: #ffffffaa;
+  border-radius: 25px;
+  padding: 20px;
+  font-size: 1.5em;
+  transition: transform 0.3s;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.level:hover {
+  transform: scale(1.05);
+  background: #ffcf91;
+}
+
+#sum-area input {
+  font-size: 1.2em;
+  padding: 5px;
+  width: 100px;
+  text-align: center;
+}
+
+#sum-area button {
+  font-size: 1.2em;
+  margin-left: 10px;
+  padding: 5px 15px;
+  border-radius: 10px;
+  background-color: #ffb703;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
