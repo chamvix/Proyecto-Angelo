@@ -5,65 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Miciogatto Impara con Te!</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Fredoka One', cursive;
-      background: linear-gradient(#a0e7e5, #fcd5ce);
-      overflow-x: hidden;
-    }
-    header {
-      background-color: #ffb703;
-      padding: 20px;
-      text-align: center;
-      color: white;
-      font-size: 2.5em;
-    }
-    .character {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .character img {
-      width: 200px;
-      animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-    .speech {
-      text-align: center;
-      font-size: 1.8em;
-      background: #fff3c2;
-      padding: 15px;
-      border-radius: 20px;
-      margin: 20px 40px;
-      display: inline-block;
-    }
-    .levels {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-      padding: 30px;
-      text-align: center;
-    }
-    .level {
-      background: #ffffffaa;
-      border-radius: 25px;
-      padding: 20px;
-      font-size: 1.5em;
-      transition: transform 0.3s;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-    .level:hover {
-      transform: scale(1.05);
-      background: #ffcf91;
-    }
-    audio {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -79,25 +21,17 @@
   </div>
 
   <div class="levels">
-    <div class="level" onclick="speak('Iniziamo con i numeri!')">Numeri</div>
-    <div class="level" onclick="speak('Somma!')">+ Somma</div>
-    <div class="level" onclick="speak('Sottrazione!')">− Sottrazione</div>
-    <div class="level" onclick="speak('Moltiplicazione!')">× Moltiplicazione</div>
-    <div class="level" onclick="speak('Divisione!')">÷ Divisione</div>
-    <div class="level" onclick="speak('Logica e Puzzle!')">🧩 Logica</div>
-    <div class="level" onclick="speak('Robotica per piccoli geni!')">🤖 Robotica</div>
-    <div class="level" onclick="speak('Robotica Avanzata!')">⚙️ Robotica Avanzata</div>
+    <div class="level" onclick="startSum()">+ Somma</div>
+    <!-- Puedes añadir más niveles aquí -->
   </div>
 
-  <script>
-    function speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'it-IT';
-      utterance.pitch = 1.3;
-      utterance.rate = 0.95;
-      speechSynthesis.speak(utterance);
-      document.getElementById('speech').innerText = text;
-    }
-  </script>
+  <!-- Área de suma interactiva -->
+  <div id="sum-area" style="text-align: center; display: none;">
+    <p id="question" style="font-size: 2em;"></p>
+    <input type="number" id="answer" placeholder="Scrivi la risposta" />
+    <button onclick="checkAnswer()">Rispondi</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
