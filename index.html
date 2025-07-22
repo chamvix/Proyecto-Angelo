@@ -3,35 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Miciogatto Suma per Bambini</title>
+  <title>Miciogatto: Somme Magiche!</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>🎓 Impara le somme con Miciogatto! 🐱</header>
+  <header>🎉 Impara con Miciogatto! 🐱</header>
 
   <div class="character">
-    <img src="https://www.flaticon.es/stickers-gratis/matematica" alt="Miciogatto il maestro" />
+    <img src="https://i.imgur.com/zlJsbGf.png" alt="Miciogatto" />
   </div>
 
-  <div class="speech" id="speech">
-    Scegli un livello di somma:
-  </div>
+  <div class="speech" id="speech">Scegli un livello!</div>
 
   <div class="levels" id="levels-container">
-    <div class="level" onclick="startLevel(1)">➕ Somma con 1</div>
-    <div class="level" onclick="startLevel(2)">➕ Somma con 2</div>
-    <div class="level" onclick="startLevel(3)">➕ Somma con 3</div>
-    <div class="level" onclick="startLevel(4)">➕ Somma con 4</div>
-    <div class="level" onclick="startLevel(5)">➕ Somma con 5</div>
-    <div class="level" onclick="startLevel(6)">➕ Somma con 6</div>
-    <div class="level" onclick="startLevel(7)">➕ Somma con 7</div>
-    <div class="level" onclick="startLevel(8)">➕ Somma con 8</div>
-    <div class="level" onclick="startLevel(9)">➕ Somma con 9</div>
+    <!-- Niveles 1 al 9 -->
+    <div class="level" onclick="startLevel(1)">1 ➕</div>
+    <div class="level" onclick="startLevel(2)">2 ➕</div>
+    <div class="level" onclick="startLevel(3)">3 ➕</div>
+    <div class="level" onclick="startLevel(4)">4 ➕</div>
+    <div class="level" onclick="startLevel(5)">5 ➕</div>
+    <div class="level" onclick="startLevel(6)">6 ➕</div>
+    <div class="level" onclick="startLevel(7)">7 ➕</div>
+    <div class="level" onclick="startLevel(8)">8 ➕</div>
+    <div class="level" onclick="startLevel(9)">9 ➕</div>
   </div>
 
   <div id="game-area" style="display: none; text-align: center;">
-    <p id="question" class="question-text"></p>
+    <p id="question" class="question-text animate-pop"></p>
     <div class="number-grid" id="number-grid"></div>
     <p id="feedback"></p>
   </div>
