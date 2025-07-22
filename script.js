@@ -1,4 +1,8 @@
-let correctAnswer = 0;
+let currentAnswer = '';
+let currentLevel = 1;
+let currentIndex = 0;
+let fixedAddend = 1;
+let problems = [];
 
 function speak(text) {
   speechSynthesis.cancel();
@@ -10,25 +14,88 @@ function speak(text) {
   document.getElementById('speech').innerText = text;
 }
 
-function startSum() {
-  const num1 = Math.floor(Math.random() * 5) + 1;
-  const num2 = Math.floor(Math.random() * 5) + 1;
-  correctAnswer = num1 + num2;
+function startLevel(level) {
+  currentLevel = level;
+  fixedAddend = level;
+  currentIndex = 0;
+  currentAnswer = '';
 
-  const frase = `Quanto fa ${num1} più ${num2}?`;
-  speak(frase);
+  problems = [];
+  for (let i = 1; i <= 9; i++) {
+    problems.push({ a: fixedAddend, b: i, result: fixedAddend + i });
+  }
 
-  document.getElementById('sum-area').style.display = 'block';
-  document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
-  document.getElementById('answer').value = '';
-  document.getElementById('answer').focus();
+  document.getElementById('levels-container').style.display = 'none';
+  document.getElementById('game-area').style.display = 'block';
+
+  generateNumberButtons();
+  showQuestion();
+}
+
+function showQuestion() {
+  if (currentIndex >= problems.length) {
+    document.getElementById('question').innerText = '🎉 Hai completato il livello!';
+    speak('Bravo! Hai finito il livello!');
+    document.getElementById('number-grid').style.display = 'none';
+    return;
+  }
+
+  const { a, b } = problems[currentIndex];
+  currentAnswer = '';
+  document.getElementById('feedback').innerText = '';
+  document.getElementById('number-grid').style.display = 'flex';
+
+  speak(`Quanto fa ${a} più ${b}?`);
+  document.getElementById('question').innerText = `${a} + ${b} = ?`;
+}
+
+function generateNumberButtons() {
+  const grid = document.getElementById('number-grid');
+  grid.innerHTML = '';
+
+  for (let i = 0; i <= 9; i++) {
+    const btn = document.createElement('button');
+    btn.innerText = i;
+    btn.onclick = () => handleNumberClick(i);
+    grid.appendChild(btn);
+  }
+
+  const delBtn = document.createElement('button');
+  delBtn.innerText = '⬅';
+  delBtn.onclick = () => {
+    currentAnswer = currentAnswer.slice(0, -1);
+    updateQuestionWithAnswer();
+  };
+  grid.appendChild(delBtn);
+
+  const okBtn = document.createElement('button');
+  okBtn.innerText = '✅';
+  okBtn.onclick = checkAnswer;
+  grid.appendChild(okBtn);
+}
+
+function handleNumberClick(num) {
+  if (currentAnswer.length < 2) {
+    currentAnswer += num.toString();
+    updateQuestionWithAnswer();
+  }
+}
+
+function updateQuestionWithAnswer() {
+  const { a, b } = problems[currentIndex];
+  document.getElementById('question').innerText = `${a} + ${b} = ${currentAnswer}`;
 }
 
 function checkAnswer() {
-  const userAnswer = parseInt(document.getElementById('answer').value);
-  if (userAnswer === correctAnswer) {
-    speak('Bravo! Hai risposto correttamente!');
+  const { result } = problems[currentIndex];
+  const user = parseInt(currentAnswer);
+
+  if (user === result) {
+    speak('Bravo! È corretto!');
+    currentIndex++;
+    setTimeout(showQuestion, 1000);
   } else {
-    speak('Ops! Riprova ancora!');
+    speak('Ops! Riprova!');
+    document.getElementById('feedback').innerText = '❌ Risposta sbagliata!';
   }
 }
