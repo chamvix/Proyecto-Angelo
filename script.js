@@ -19,23 +19,22 @@ function startLevel(level) {
   fixedAddend = level;
   currentIndex = 0;
   currentAnswer = '';
-
   problems = [];
+
   for (let i = 1; i <= 9; i++) {
     problems.push({ a: fixedAddend, b: i, result: fixedAddend + i });
   }
 
   document.getElementById('levels-container').style.display = 'none';
   document.getElementById('game-area').style.display = 'block';
-
-  generateNumberButtons();
+  generateButtons();
   showQuestion();
 }
 
 function showQuestion() {
   if (currentIndex >= problems.length) {
     document.getElementById('question').innerText = '🎉 Hai completato il livello!';
-    speak('Bravo! Hai finito il livello!');
+    speak('Bravissimo! Hai completato il livello!');
     document.getElementById('number-grid').style.display = 'none';
     return;
   }
@@ -44,12 +43,16 @@ function showQuestion() {
   currentAnswer = '';
   document.getElementById('feedback').innerText = '';
   document.getElementById('number-grid').style.display = 'flex';
+  document.getElementById('question').classList.add('animate-pop');
+  setTimeout(() => {
+    document.getElementById('question').classList.remove('animate-pop');
+  }, 400);
 
   speak(`Quanto fa ${a} più ${b}?`);
   document.getElementById('question').innerText = `${a} + ${b} = ?`;
 }
 
-function generateNumberButtons() {
+function generateButtons() {
   const grid = document.getElementById('number-grid');
   grid.innerHTML = '';
 
@@ -64,7 +67,7 @@ function generateNumberButtons() {
   delBtn.innerText = '⬅';
   delBtn.onclick = () => {
     currentAnswer = currentAnswer.slice(0, -1);
-    updateQuestionWithAnswer();
+    updateAnswerDisplay();
   };
   grid.appendChild(delBtn);
 
@@ -77,11 +80,11 @@ function generateNumberButtons() {
 function handleNumberClick(num) {
   if (currentAnswer.length < 2) {
     currentAnswer += num.toString();
-    updateQuestionWithAnswer();
+    updateAnswerDisplay();
   }
 }
 
-function updateQuestionWithAnswer() {
+function updateAnswerDisplay() {
   const { a, b } = problems[currentIndex];
   document.getElementById('question').innerText = `${a} + ${b} = ${currentAnswer}`;
 }
@@ -91,11 +94,13 @@ function checkAnswer() {
   const user = parseInt(currentAnswer);
 
   if (user === result) {
-    speak('Bravo! È corretto!');
+    speak('Bravo! Risposta corretta!');
     currentIndex++;
     setTimeout(showQuestion, 1000);
   } else {
-    speak('Ops! Riprova!');
-    document.getElementById('feedback').innerText = '❌ Risposta sbagliata!';
+    speak('Ops! Non è corretto. Riprova!');
+    currentAnswer = '';
+    updateAnswerDisplay();
+    document.getElementById('feedback').innerText = '❌ Prova ancora!';
   }
 }
