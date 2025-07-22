@@ -36,6 +36,8 @@ function showQuestion() {
     document.getElementById('question').innerText = '🎉 Hai completato il livello!';
     speak('Bravissimo! Hai completato il livello!');
     document.getElementById('number-grid').style.display = 'none';
+    document.getElementById('feedback').innerHTML = '🎊 LIVELLO COMPLETATO!';
+    document.getElementById('feedback').className = 'feedback correct';
     return;
   }
 
@@ -43,13 +45,8 @@ function showQuestion() {
   currentAnswer = '';
   document.getElementById('feedback').innerText = '';
   document.getElementById('number-grid').style.display = 'flex';
-  document.getElementById('question').classList.add('animate-pop');
-  setTimeout(() => {
-    document.getElementById('question').classList.remove('animate-pop');
-  }, 400);
-
-  speak(`Quanto fa ${a} più ${b}?`);
   document.getElementById('question').innerText = `${a} + ${b} = ?`;
+  speak(`Quanto fa ${a} più ${b}?`);
 }
 
 function generateButtons() {
@@ -93,14 +90,22 @@ function checkAnswer() {
   const { result } = problems[currentIndex];
   const user = parseInt(currentAnswer);
 
-  if (user === result) {
-    speak('Bravo! Risposta corretta!');
-    currentIndex++;
-    setTimeout(showQuestion, 1000);
-  } else {
-    speak('Ops! Non è corretto. Riprova!');
-    currentAnswer = '';
-    updateAnswerDisplay();
-    document.getElementById('feedback').innerText = '❌ Prova ancora!';
+  if (!isNaN(user)) {
+    if (user === result) {
+      document.getElementById('feedback').innerText = '🎉 CORRETTO!';
+      document.getElementById('feedback').className = 'feedback correct';
+      speak('Bravo! Risposta corretta!');
+      currentIndex++;
+      setTimeout(showQuestion, 1200);
+    } else {
+      document.getElementById('feedback').innerText = '❌ SBAGLIATO!';
+      document.getElementById('feedback').className = 'feedback incorrect';
+      speak('Ops! Non è corretto. Riprova!');
+      currentAnswer = '';
+      setTimeout(() => {
+        updateAnswerDisplay();
+        document.getElementById('feedback').innerText = '';
+      }, 1000);
+    }
   }
 }
